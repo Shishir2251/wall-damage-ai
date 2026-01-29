@@ -1,0 +1,11 @@
+path: ./dataset
+train: images/train
+val: images/val
+
+names:
+0: crack
+1: hole
+2: damp
+3: mold
+4: peeling
+5: Structural_break
