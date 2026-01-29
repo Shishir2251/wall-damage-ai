@@ -1,0 +1,7 @@
+__pycache__/
+.env
+models/*.pt
+*.jpg
+*.png
+training/dataset/
+*/__pycache__/
