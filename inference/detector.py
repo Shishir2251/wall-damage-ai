@@ -4,31 +4,29 @@ import io
 
 model= YOLO("yolov8n.pt")
 
-DAMAGE_MAP={
+"""DAMAGE_MAP={
     "crack": ["crack", "fracture", "break"],
     "hole":  ["hole"],
     "damp":  ["stain","wet"],
     "mold":  ["mold", "fungus"],
     "peeling": ["peel"],
-}
+}"""
 
 def detect_damage(image_file):
-    Image = Image.open(io.BytesIO(image_file.file.read()))
+    Image = Image.open(io.BytesIO(image_file.file.read())).convert("RGB")
     results = model(Image)
 
-    damages = []
-    for box in results[0].boxes:
-        cls = int(box.cls)
-        label = model.names[cls].lower()
-        area= float(box.xywh[0][2]*box.xywh[0][3])
+    detections = []
+    for r in results:
+        for box in r.boxes:
+            cls_id= int(box.cls[0])
+            label = model.names[cls_id]
+            area= float((box.xywh[0][2] - box.xyxy[0][0])*
+                        box.xywh[0][3] - box.xyxy[0][0])
 
-        damage_type = "unknown"
-        for k, v in DAMAGE_MAP.items():
-            if any(word in label for word in v):
-                damage_type = k
-        damages.append({
-            "type": damage_type,
-            "raw_labels": label,
-            "area": round(area,2)
-        })
-    return damages
+            detections.append({
+                "type": label,
+                "raw_label": label,
+                "area": area
+            })
+    return detections
