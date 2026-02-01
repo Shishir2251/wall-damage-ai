@@ -5,3 +5,5 @@ models/*.pt
 *.png
 training/dataset/
 */__pycache__/
+senv/
+training/

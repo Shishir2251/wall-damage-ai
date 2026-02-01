@@ -1,14 +1,14 @@
-# Wall Damage AI API
+# Wall Damage AI (No Training Version)
 
-AI system for detecting wall damages from images and estimating repair cost.
-
-## Features
-- Crack, hole, damp, mold detection
-- Area estimation
-- Country-based repair cost
-- Repair recommendations
+This system uses pretrained computer vision models.
+No dataset, no training, no GPU required.
 
 ## Run
-```bash
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+
+## Endpoint
+POST /analyze
+Form-data:
+- image
+- country
